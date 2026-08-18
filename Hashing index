@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int size = 10;
+    int hashTable[size];
+
+    // Initialize
+    for (int i = 0; i < size; i++) {
+        hashTable[i] = -1;
+    }
+
+    // Insert
+    int key = 25;
+    int index = key % size;
+
+    hashTable[index] = key;
+
+    // Search
+    int searchKey = 25;
+    int searchIndex = searchKey % size;
+
+    if (hashTable[searchIndex] == searchKey)
+        cout << "Element found at index " << searchIndex;
+    else
+        cout << "Element not found";
+
+    return 0;
+}
