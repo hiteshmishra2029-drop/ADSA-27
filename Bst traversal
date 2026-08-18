@@ -1,0 +1,81 @@
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int value) {
+        data = value;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+// Create Binary Tree
+Node* insertNode() {
+    int data;
+    cin >> data;
+
+    if (data == -1)
+        return NULL;
+
+    Node* node = new Node(data);
+
+    cout << "Enter left child of " << data << ": ";
+    node->left = insertNode();
+
+    cout << "Enter right child of " << data << ": ";
+    node->right = insertNode();
+
+    return node;
+}
+
+// Pre-order Traversal
+void preorder(Node* node) {
+    if (node == NULL)
+        return;
+
+    cout << node->data << " ";
+    preorder(node->left);
+    preorder(node->right);
+}
+
+// In-order Traversal
+void inorder(Node* node) {
+    if (node == NULL)
+        return;
+
+    inorder(node->left);
+    cout << node->data << " ";
+    inorder(node->right);
+}
+
+// Post-order Traversal
+void postorder(Node* node) {
+    if (node == NULL)
+        return;
+
+    postorder(node->left);
+    postorder(node->right);
+    cout << node->data << " ";
+}
+
+int main() {
+
+    cout << "Enter root node: ";
+    Node* root = insertNode();
+
+    cout << "\nPre-order: ";
+    preorder(root);
+
+    cout << "\nIn-order: ";
+    inorder(root);
+
+    cout << "\nPost-order: ";
+    postorder(root);
+
+    return 0;
+}
