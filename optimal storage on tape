@@ -1,0 +1,52 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// Function to compute the optimal storage order and retrieval times
+void optimalStorageOnTape(vector<int>& lengths) {
+    int n = lengths.size();
+    if (n == 0) {
+        cout << "No programs to store.\n";
+        return;
+    }
+
+    // Step 1: Sort the program lengths in non-decreasing order (Greedy choice)
+    sort(lengths.begin(), lengths.end());
+
+    cout << "Optimal storage order (lengths): ";
+    for (int len : lengths) {
+        cout << len << " ";
+    }
+    cout << "\n";
+
+    // Step 2: Compute total and mean retrieval time
+    double totalRetrievalTime = 0;
+    double cumulativeSum = 0;
+
+    for (int i = 0; i < n; ++i) {
+        cumulativeSum += lengths[i];
+        totalRetrievalTime += cumulativeSum;
+    }
+
+    double meanRetrievalTime = totalRetrievalTime / n;
+
+    cout << "Total Retrieval Time: " << totalRetrievalTime << "\n";
+    cout << "Mean Retrieval Time: " << meanRetrievalTime << "\n";
+}
+
+int main() {
+    // Example program lengths
+    vector<int> lengths = {5, 10, 3, 8, 2};
+
+    cout << "Initial program lengths: ";
+    for (int len : lengths) {
+        cout << len << " ";
+    }
+    cout << "\n\n";
+
+    optimalStorageOnTape(lengths);
+
+    return 0;
+}
