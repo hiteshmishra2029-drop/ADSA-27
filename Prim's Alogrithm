@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void primMST(int V, vector<vector<pair<int, int>>> &adj) {
+    priority_queue<
+        tuple<int, int, int>,
+        vector<tuple<int, int, int>>,
+        greater<tuple<int, int, int>>
+    > pq;
+
+    vector<bool> visited(V, false);
+
+    int totalWeight = 0;
+
+    pq.push({0, 0, -1});
+
+    cout << "MST Edges:\n";
+
+    while (!pq.empty()) {
+        auto [weight, u, parent] = pq.top();
+        pq.pop();
+
+        if (visited[u])
+            continue;
+
+        visited[u] = true;
+
+        if (parent != -1) {
+            cout << parent << " - " << u
+                 << " : " << weight << '\n';
+
+            totalWeight += weight;
+        }
+
+        for (auto [v, w] : adj[u]) {
+            if (!visited[v]) {
+                pq.push({w, v, u});
+            }
+        }
+    }
+
+    cout << "Total MST Weight = " << totalWeight << '\n';
+}
+
+int main() {
+    int V = 5;
+
+    vector<vector<pair<int, int>>> adj(V);
+
+    auto addEdge = [&](int u, int v, int w) {
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
+    };
+
+    addEdge(0, 1, 2);
+    addEdge(0, 3, 6);
+    addEdge(1, 2, 3);
+    addEdge(1, 3, 8);
+    addEdge(1, 4, 5);
+    addEdge(2, 4, 7);
+    addEdge(3, 4, 9);
+
+    primMST(V, adj);
+
+    return 0;
+}
